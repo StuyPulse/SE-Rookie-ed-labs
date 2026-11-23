@@ -25,7 +25,7 @@ package com.stuypulse.robot.subsystems.intake;
     make the IntakeIOOutputs class
         make a variable (named outputMode) of the IntakeOutputModes enum/type, and initialize this variable to STOP
         make a double variable called "voltage" and set it to 6.0
-            IMPORTANT: what annotation do we need to put over each of the variables inside of this class? - put it there! 
+            IMPORTANT: what annotation do we need to put over each of the variables inside of this class? - put it there!
     */
 
     /*
@@ -33,4 +33,3 @@ package com.stuypulse.robot.subsystems.intake;
         what parameters do each of these methods need?
             strategize how we will use these parameters.
     */
-

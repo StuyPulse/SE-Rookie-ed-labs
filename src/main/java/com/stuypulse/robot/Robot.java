@@ -33,8 +33,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
  * specific states of the robot.
  */
 public class Robot extends LoggedOpModeRobot {
-    //LAST PART (1/2 steps):
-    //declare a new private final Intake object called intake
+    // LAST PART (1/2 steps):
+    // declare a new private final Intake object called intake
 
     private static final Alert allianceMissing =
             new Alert(
@@ -65,12 +65,14 @@ public class Robot extends LoggedOpModeRobot {
     public final Scheduler defaultScheduler;
 
     public Robot() {
-        //PART 4 (2/2):
-        //create a switch that handles the cases for GlobalSettings.CURRENT_MODE (REAL, SIM, REPLAY)
-        //for REAL, the Intake field declared up top should be initialized to new Intake(new IntakeIOReal())
-            //what should it be for sim?
-        //instead of doing REPLAY deliberately, do the following:
-            //default -> intake = new IntakeIOInputs() {};
+        // PART 4 (2/2):
+        // create a switch that handles the cases for GlobalSettings.CURRENT_MODE (REAL, SIM,
+        // REPLAY)
+        // for REAL, the Intake field declared up top should be initialized to new Intake(new
+        // IntakeIOReal())
+        // what should it be for sim?
+        // instead of doing REPLAY deliberately, do the following:
+        // default -> intake = new IntakeIOInputs() {};
 
         this.defaultScheduler = Scheduler.getDefault();
         configureLogging();

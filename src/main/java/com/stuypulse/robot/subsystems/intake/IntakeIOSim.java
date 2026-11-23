@@ -4,16 +4,16 @@
 /**************************************************************/
 package com.stuypulse.robot.subsystems.intake;
 
-//PART 6
-//make the IntakeIOSim class. You should now be familiar with the file structure of akit and know that this should inherit from the IntakeIOBase class
+// PART 6
+// make the IntakeIOSim class. You should now be familiar with the file structure of akit and know
+// that this should inherit from the IntakeIOBase class
 
 /*
-BEFORE STARTING: review the following documentation: 
+BEFORE STARTING: review the following documentation:
         https:docs.wpilib.org/en/stable/docs/software/wpilib-tools/robot-simulation/physics-sim.html#wpilib-s-simulation-classes
         https:github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj/simulation/LinearSystemSim.html
         https:github.wpilib.org/allwpilib/docs/release/java/edu/wpi/first/wpilibj/simulation/DCMotorSim.html
 */
-
 
         /*
         make a private final field of the SystemSim class. We need to use generics here, so be sure to do: SystemSim<DCMotorSim> name
@@ -31,11 +31,9 @@ BEFORE STARTING: review the following documentation:
                 !! initialize the fields we have made using this.
         */
 
-
         /*
         Override the updateInputs function
                 we need to override this because as seen in the first source lists, Simulated objects need to be updated via an update method and refreshed.
                 after you implement those calls to update the simulation system, be sure to call super.updateInputs(inputs);
                         check global settings for DT (represents the loop time in the simulation)
         */
-

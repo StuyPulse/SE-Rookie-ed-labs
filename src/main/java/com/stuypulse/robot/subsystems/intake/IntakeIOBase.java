@@ -8,13 +8,13 @@ package com.stuypulse.robot.subsystems.intake;
 //make the abstract class named IntakeIOBase
     //it has IntakeIO inside of its name? wow! what do you think this abstract class should implement? - do it :D
 
-    /* 
+    /*
      make the LoggedTalonFX object. We will initialize this in the constructor. src\main\java\com\stuypulse\robot\util\talonfx\logged\LoggedTalonFX.java
          name this intakeMotor
      make the VoltageOut object. We will initialize this in the constructor. https: api.ctr-electronics.com/phoenix6/stable/java/com/ctre/phoenix6/controls/VoltageOut.html
          name this intakeMotorController
 
-     !!! as a general notice, you should be making fields private final and then initializing in the constructor 
+     !!! as a general notice, you should be making fields private final and then initializing in the constructor
     */
 
     /*

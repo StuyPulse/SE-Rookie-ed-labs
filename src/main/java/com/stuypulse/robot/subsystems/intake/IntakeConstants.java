@@ -15,13 +15,12 @@ package com.stuypulse.robot.subsystems.intake;
 
     /*
     make an IntakePorts interface, inside of it...
-        make a variable inside of it called INTAKE_MOTOR. 
+        make a variable inside of it called INTAKE_MOTOR.
         set this variable to 0 (int)
     */
 
     /*
-    make an IntakeSettings interface, inside of it... 
+    make an IntakeSettings interface, inside of it...
         make 2 variables: (double) MOI and (double) GEAR_RATIO
         set both to 0.0
     */
-
