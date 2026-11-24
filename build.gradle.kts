@@ -125,7 +125,8 @@ spotless {
         )
         
         // Update this license header to match the robot project
-        licenseHeader("""/************************ PROJECT ZIXI ************************/
+        licenseHeader("""
+/************************ LAB - OOP #1 ************************/
 /* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
 /* This work is licensed under the terms of the MIT license.  */
 /**************************************************************/
