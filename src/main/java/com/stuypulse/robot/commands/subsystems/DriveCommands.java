@@ -14,11 +14,14 @@ import com.stuypulse.robot.Robot;
 import com.stuypulse.robot.constants.DriverConstants;
 import com.stuypulse.robot.subsystems.swerve.Swerve;
 import com.stuypulse.robot.subsystems.swerve.SwerveConstants;
+import com.stuypulse.robot.subsystems.swerve.SwerveConstants.SwerveGains;
+import com.stuypulse.robot.util.robotsimulation.DriverProcessor;
 import com.stuypulse.robot.util.swerve.DriveInputProcessor;
 import com.stuypulse.robot.util.swerve.DriveTurnInputProcessor;
 
 import org.wpilib.command3.*;
 import org.wpilib.command3.button.CommandGamepad;
+import org.wpilib.math.controller.PIDController;
 import org.wpilib.math.filter.SlewRateLimiter;
 import org.wpilib.math.geometry.Pose2d;
 import org.wpilib.math.geometry.Rotation2d;
@@ -271,5 +274,49 @@ public interface DriveCommands {
         double[] positions = new double[4];
         Rotation2d lastAngle = new Rotation2d();
         double gyroDelta = 0.0;
+    }
+
+    /**
+     * uses PID to drive towards the target provided by BVC
+     *
+     * @param swerve Swerve subsystem instance
+     * @param targetName Name of the target you want to approach
+     * @return repeating command that drives towards the target
+     */
+    public static Command PIDToPose(Swerve swerve, DriverProcessor processor, String targetName) {
+        final PIDController xController =
+                new PIDController(
+                        SwerveGains.Translation.kP,
+                        SwerveGains.Translation.kI,
+                        SwerveGains.Translation.kD);
+        final PIDController yController =
+                new PIDController(
+                        SwerveGains.Translation.kP,
+                        SwerveGains.Translation.kI,
+                        SwerveGains.Translation.kD);
+        final PIDController angleController =
+                new PIDController(
+                        SwerveGains.Rotation.kP, SwerveGains.Rotation.kI, SwerveGains.Rotation.kD);
+        angleController.enableContinuousInput(Math.PI, -Math.PI); // todo: verify math
+        return swerve.runRepeatedly(
+                        () -> {
+                            Pose2d self = swerve.getPose();
+                            Pose2d target = processor.getNextPose();
+                            ChassisVelocities speeds =
+                                    new ChassisVelocities(
+                                            xController.calculate(self.getX(), target.getX()),
+                                            yController.calculate(self.getY(), target.getY()),
+                                            angleController.calculate(
+                                                    self.getRotation().getRadians(),
+                                                    target.getRotation().getRadians()));
+                            swerve.runVelocity(speeds);
+                        })
+                .whenExited(
+                        () -> {
+                            xController.reset();
+                            yController.reset();
+                            processor.advance();
+                        })
+                .named("PIDTo" + targetName);
     }
 }

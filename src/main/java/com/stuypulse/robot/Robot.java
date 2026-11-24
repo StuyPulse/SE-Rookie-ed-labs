@@ -12,6 +12,7 @@ import com.stuypulse.robot.constants.GlobalSettings;
 import com.stuypulse.robot.generated.BuildConstants;
 import com.stuypulse.robot.opmodes.AutonOpMode;
 import com.stuypulse.robot.opmodes.sysid.SwerveDriveSysId;
+import com.stuypulse.robot.subsystems.drive.Driver;
 import com.stuypulse.robot.subsystems.swerve.GyroIO;
 import com.stuypulse.robot.subsystems.swerve.GyroIOPigeon2;
 import com.stuypulse.robot.subsystems.swerve.ModuleIO;
@@ -28,6 +29,7 @@ import com.stuypulse.robot.subsystems.vision.VisionIOLimelight;
 import com.stuypulse.robot.subsystems.vision.VisionIOPhoton;
 import com.stuypulse.robot.subsystems.vision.VisionIOPhotonSim;
 import com.stuypulse.robot.util.PeriodicSubsystem;
+import com.stuypulse.robot.util.robotsimulation.DriverProcessor;
 
 import org.wpilib.command3.Scheduler;
 import org.wpilib.command3.button.CommandGamepad;
@@ -87,7 +89,10 @@ public class Robot extends LoggedOpModeRobot {
     public final Vision vision;
     public final Scheduler defaultScheduler;
 
+    private final DriverProcessor driverProcessor;
+
     public Robot() {
+        this.driverProcessor = new DriverProcessor(new Driver());
         this.defaultScheduler = Scheduler.getDefault();
         configureLogging();
 
@@ -216,6 +221,7 @@ public class Robot extends LoggedOpModeRobot {
 
     private void configureButtonBindings() {
         driver.dpadUp().onTrue(DriveCommands.resetHeading(swerve, Rotation2d.ZERO));
+        driver.faceDown().whileTrue(DriveCommands.PIDToPose(swerve, driverProcessor, "Pose"));
     }
 
     private void configureAutons() {

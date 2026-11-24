@@ -41,4 +41,18 @@ public interface SwerveConstants {
             Time DYNAMIC_TIMEOUT = Seconds.of(2);
         }
     }
+
+    interface SwerveGains {
+        interface Translation {
+            double kP = 20.0;
+            double kI = 0.0;
+            double kD = 0.2;
+        }
+
+        interface Rotation {
+            double kP = 20.0;
+            double kI = 0.0;
+            double kD = 0.2;
+        }
+    }
 }
