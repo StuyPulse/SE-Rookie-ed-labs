@@ -5,12 +5,12 @@
 package com.stuypulse.robot.subsystems.drive;
 
 public class Driver {
-    public double[] xSteps = new double[] {};
-    public double[] ySteps = new double[] {};
-    public double[] angleSteps = new double[] {};
-
     public Driver() {}
 
+    /**
+     * Write this method such that every time it is called,
+     * the controllers have their values updated to the next target pose.
+     */
     public void periodic() {
         // write your code here! this will act like the main method
     }

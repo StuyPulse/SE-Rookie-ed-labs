@@ -26,11 +26,18 @@ public class DriverProcessor {
         Field turnField = null;
         for (Field field : driver.getClass().getDeclaredFields()) {
             if (field.getAnnotatedType().getType().getTypeName().equals(driveType)) {
+                if (driveField != null) {
+                    IO.println("[LAB] Driver.java should only have one field of type " + driveType);
+                    System.exit(1);
+                }
                 driveField = field;
             } else if (field.getAnnotatedType().getType().getTypeName().equals(turnType)) {
+                if (turnField != null) {
+                    IO.println("[LAB] Driver.java should only have one field of type " + driveType);
+                    System.exit(1);
+                }
                 turnField = field;
             }
-            ;
         }
         if (driveField == null || turnField == null) {
             IO.println(
@@ -42,6 +49,9 @@ public class DriverProcessor {
         try {
             driveController = (DriveController) driveField.get(driver);
             turnController = (TurnController) turnField.get(driver);
+            if (driveController == null || turnController == null) {
+                throw new IllegalArgumentException();
+            }
         } catch (Exception e) {
             IO.println("[LAB] Could not retrieve a valid drive or turn controller");
             System.exit(1);
