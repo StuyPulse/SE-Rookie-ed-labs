@@ -1,0 +1,88 @@
+/********************** PROJECT LIFT LAB **********************/
+/* Copyright (c) 2026 StuyPulse Robotics. All rights reserved.*/
+/* This work is licensed under the terms of the MIT license.  */
+/**************************************************************/
+package com.stuypulse.robot.subsystems.claw;
+
+import static org.wpilib.units.Units.*;
+
+import com.stuypulse.robot.util.talonfx.config.TalonFXConfig;
+
+import org.wpilib.units.AngularAccelerationUnit;
+import org.wpilib.units.measure.*;
+
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+
+public interface ClawConstants {
+    interface ClawSettings {
+        interface Pivot {
+            AngularVelocity MAX_VELOCITY = RPM.of(100); // placeholder
+            AngularAcceleration MAX_ACCELERATION =
+                    RotationsPerSecondPerSecond.of(100); // placeholder
+            Velocity<AngularAccelerationUnit> MAX_JERK =
+                    RotationsPerSecondPerSecond.per(Second).of(1600);
+
+            Angle INTAKE_ANGLE = Degrees.of(180);
+            Angle HELD_ANGLE = Degrees.zero();
+            Angle HELD_THRESHOLD = HELD_ANGLE.minus(Degrees.of(1));
+            Angle OUTTAKE_ANGLE = Degrees.of(180);
+            Angle DEPLOYED_THRESHOLD = OUTTAKE_ANGLE.minus(Degrees.of(1));
+
+            // Sim stuff
+            double GEAR_RATIO = 65.8 / 1;
+            MomentOfInertia MOI = KilogramSquareMeters.of(0.2213322307);
+            Distance ARM_LENGTH = Inches.of(16.3);
+            Angle MIN_ANGLE = Degrees.zero();
+            Angle MAX_ANGLE = Degrees.of(180);
+        }
+
+        interface Rollers {
+            Current ROLLER_SUPPLY_LIMIT = Amps.of(80.0); // placeholder
+
+            double OUTTAKE_DUTY_CYCLE = -1.0;
+            double INTAKE_DUTY_CYCLE = 1.0;
+            double IDLE_DUTY_CYCLE = 0.0;
+
+            // Sim stuff
+            double GEAR_RATIO = 5.0 / 1.0;
+            MomentOfInertia MOI = KilogramSquareMeters.of(0.0002609971);
+        }
+    }
+
+    interface ClawPorts {
+        int CLAW_PIVOT_MOTOR = 18;
+        int CLAW_ROLLER_MOTOR = 19;
+    }
+
+    interface ClawConfigs {
+        TalonFXConfig CLAW_PIVOT_MOTOR_CONFIG =
+                new TalonFXConfig()
+                        .withInvertedValue(InvertedValue.Clockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Brake)
+                        .withPIDConstants(
+                                ClawGains.Pivot.kP, ClawGains.Pivot.kI, ClawGains.Pivot.kD, 0)
+                        .withFFConstants(ClawGains.Pivot.kS, ClawGains.Pivot.kV, 0, 0)
+                        .withMotionProfile(
+                                ClawSettings.Pivot.MAX_VELOCITY,
+                                ClawSettings.Pivot.MAX_ACCELERATION)
+                        .withSensorToMechanismRatio(ClawSettings.Pivot.GEAR_RATIO);
+        TalonFXConfig CLAW_ROLLER_MOTOR_CONFIG =
+                new TalonFXConfig()
+                        .withInvertedValue(InvertedValue.Clockwise_Positive)
+                        .withNeutralMode(NeutralModeValue.Coast)
+                        .withSupplyCurrentLimit(ClawSettings.Rollers.ROLLER_SUPPLY_LIMIT);
+    }
+
+    interface ClawGains {
+        interface Pivot {
+            // all placeholder
+            double kP = 60.0;
+            double kI = 0.0;
+            double kD = 0.01;
+
+            double kV = 0.2;
+            double kS = 0.25;
+        }
+    }
+}
